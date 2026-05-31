@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify Reset Code - Mujeeb KAU</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/public-style.css" />
+  <link rel="stylesheet" href="../css/shared-style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand" onclick="goPublic('landing')" title="Go Home">
+        <div class="logo-icon">
+          <img src="../sharing/logo.png" alt="Logo">
+        </div>
+        <div class="brand-text">
+          <h2>Mujeeb KAU</h2>
+          <p>Academic Assistant</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="top-link" onclick="goPublic('login')">Log In</button>
+        <button class="top-link primary" onclick="goPublic('signup')">Create Account</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="public-main">
+    <div class="container">
+
+      <!-- ── 3-Step Progress Bar ─────────────────────────────── -->
+      <div class="flow-steps" aria-label="Password reset progress">
+        <div class="flow-step done" id="fs1">
+          <div class="step-circle">✓</div>
+          <span class="step-label">Email</span>
+        </div>
+        <div class="flow-connector done"></div>
+        <div class="flow-step active" id="fs2">
+          <div class="step-circle">2</div>
+          <span class="step-label">Code</span>
+        </div>
+        <div class="flow-connector"></div>
+        <div class="flow-step" id="fs3">
+          <div class="step-circle">3</div>
+          <span class="step-label">New Password</span>
+        </div>
+      </div>
+
+      <div class="card auth-card">
+
+        <!-- Step badge -->
+        <div class="step-badge">Step 2 of 3</div>
+
+        <div class="card-header">Enter Your Reset Code</div>
+        <p class="auth-subtitle">We sent a 6-digit code to your email. Check your inbox (and spam folder).</p>
+
+        <!-- Destination email (read-only, auto-filled) -->
+        <div class="form-group">
+          <label for="verifyResetEmail">Code sent to</label>
+          <input
+            type="email"
+            id="verifyResetEmail"
+            readonly
+            class="input-readonly"
+            tabindex="-1"
+          />
+        </div>
+
+        <!-- Code input -->
+        <div class="form-group">
+          <label for="verifyResetCode">Reset Code</label>
+          <input
+            type="text"
+            id="verifyResetCode"
+            placeholder="e.g. 482916"
+            maxlength="10"
+            autocomplete="one-time-code"
+            inputmode="numeric"
+            autofocus
+          />
+          <p class="field-hint">📧 Enter the code exactly as received — it expires in 15 minutes</p>
+          <p class="field-error" id="codeError"></p>
+        </div>
+
+        <button id="verifyCodeBtn" class="btn btn-success btn-full" onclick="handleVerifyResetCode()">
+          Verify Code →
+        </button>
+
+        <div class="verify-email-resend">
+          <span class="resend-text">Didn't receive the code?</span>
+          <button id="resendResetCodeBtn" type="button" class="link-button" onclick="handleResendResetCode()">
+            Resend Code
+          </button>
+        </div>
+
+        <div class="text-center mt-20">
+          <span class="link" onclick="goPublic('login')">← Back to Log In</span>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/shared-script.js"></script>
+  <script src="../js/public-script.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+
+      // Auto-fill email from localStorage (backend-driven value, unchanged)
+      const savedEmail = localStorage.getItem("reset_email");
+      if (savedEmail) {
+        document.getElementById("verifyResetEmail").value = savedEmail;
+      }
+
+      // Focus the code input immediately
+      const codeInput = document.getElementById("verifyResetCode");
+      if (codeInput) codeInput.focus();
+
+      // Inline validation on blur
+      const err = document.getElementById("codeError");
+      codeInput.addEventListener("blur", () => {
+        const v = codeInput.value.trim();
+        if (!v) { codeInput.classList.remove("input-error","input-valid"); err.style.display="none"; return; }
+        if (v.length < 4) {
+          codeInput.classList.add("input-error"); codeInput.classList.remove("input-valid");
+          err.textContent = "⚠ Code seems too short — please check again";
+          err.style.display = "block";
+        } else {
+          codeInput.classList.remove("input-error"); codeInput.classList.add("input-valid");
+          err.style.display = "none";
+        }
+      });
+      codeInput.addEventListener("focus", () => {
+        codeInput.classList.remove("input-error","input-valid"); err.style.display="none";
+      });
+    });
+  </script>
+
+</body>
+</html>

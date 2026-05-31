@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Document head: Styles and metadata -->
+
+<head>
+  <meta charset="UTF-8">
+  <title>GPA Calculator - Mujeeb KAU</title>
+  <link rel="stylesheet" href="../../css/UserView-styles.css">
+  <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+
+</head>
+
+<body>
+
+  <!-- Main application shell -->
+  <div class="app-shell" id="authArea">
+    <div class="sidebar-overlay hidden" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div id="sidebarMount"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <div class="container">
+
+        <div class="card">
+          <div class="card-header">GPA Calculator</div>
+
+          <!-- GPA input section -->
+          <div class="form-group">
+            <label>Current GPA</label>
+            <input type="number" id="currentGPA" step="0.01">
+          </div>
+
+          <!-- Completed hours field -->
+          <div class="form-group">
+            <label>Completed Hours</label>
+            <input type="number" id="completedHours">
+          </div>
+
+          <!-- Dynamic course list -->
+          <h3>New Courses</h3>
+          <div class="course-list" id="courseList"></div>
+
+          <!-- GPA action buttons -->
+          <button class="btn btn-success" onclick="addCourse()">+ Add Course</button>
+          <button class="btn btn-success" onclick="calculateGPA()">Calculate GPA</button>
+
+          <div id="gpaResult"></div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- External resource scripts -->
+  <script src="../js/shared-script.js"></script>
+
+  <script src="../../js/UserView-script.js"></script>
+
+  <!-- Initialize shared sidebar components -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+      await loadSharedSidebar("sidebarMount");
+      setSidebarRole("user");
+    });
+  </script>
+</body>
+
+</html>

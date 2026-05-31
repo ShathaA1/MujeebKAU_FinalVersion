@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mujeeb KAU – Updates History</title>
+  <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+  <link rel="stylesheet" href="../css/admin-styles.css" />
+  <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+
+
+    <!-- ===== Main Content ===== -->
+    <main class="main-content">
+      <div class="container">
+
+        <!-- ===== Updates History Card ===== -->
+        <div class="card">
+
+          <!-- Header with back arrow -->
+          <div class="card-header">
+            <span>Recent Academic Updates</span>
+            <span class="back-arrow" onclick="location.href='admin-update.html'">←</span>
+          </div>
+
+          <!-- ===== Filters Row ===== -->
+          <div class="filters-row">
+
+            <div class="filter-group">
+              <select id="filterType" onchange="filterUpdates()">
+                <option value="all">All Types</option>
+                <option value="Academic Calendar">Academic Calendar</option>
+                <option value="Exam Schedule">Exam Schedule</option>
+                <option value="Regulations">Regulations</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <select id="filterCategory" onchange="filterUpdates()">
+                <option value="all">All Users</option>
+                <option value="student">Student</option>
+                <option value="faculty">Faculty</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <select id="filterCollege" onchange="filterUpdates()">
+                <option value="all">All Colleges</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Applied Medical Sciences">Applied Medical Sciences</option>
+                <option value="Dentistry">Dentistry</option>
+                <option value="Pharmacy">Pharmacy</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Sciences">Sciences</option>
+                <option value="Human Sciences and Design">Human Sciences and Design</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Environmental Sciences">Environmental Sciences</option>
+                <option value="Tourism">Tourism</option>
+                <option value="Architecture and Planning">Architecture and Planning</option>
+                <option value="Computing and Information Technology">Computing and Information Technology</option>
+                <option value="Economics and Administration">Economics and Administration</option>
+                <option value="Earth Sciences">Earth Sciences</option>
+                <option value="Maritime Studies">Maritime Studies</option>
+                <option value="Arts and Humanities">Arts and Humanities</option>
+                <option value="Law">Law</option>
+                <option value="Education">Education</option>
+                <option value="Communication and Media">Communication and Media</option>
+
+              </select>
+            </div>
+
+            <!-- Push this button to the right -->
+            <button class="btn btn-danger" onclick="deleteSelectedUpdates()">
+              Delete Selected
+            </button>
+
+          </div>
+
+          <!-- Updates Table -->
+          <table class="updates-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Document Name</th>
+                <th>Type</th>
+                <th>Target Users</th>
+                <th>College</th>
+                <th>Upload Date</th>
+              </tr>
+            </thead>
+            <tbody id="recentUpdatesTable"></tbody>
+          </table>
+
+
+        </div>
+
+
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Shared JS (toast + sidebar functions) -->
+  <script src="../js/shared-script.js"></script>
+
+  <script src="../js/admin-script.js"></script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    await loadSharedToast();
+
+    await fetchRecentDocuments();
+    loadRecentUpdatesPage();
+  });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mujeeb KAU - Admin Overview</title>
+  <link rel="stylesheet" href="../css/admin-styles.css" />
+    <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+
+</head>
+<body>
+
+<div class="app-shell" id="authArea">
+  <div class="sidebar-overlay hidden" id="sidebarOverlay" onclick="closeSidebar()"></div>
+  <div id="sidebarMount"></div>
+
+  <!-- ===== Main Content ===== -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- ===== Statistics ===== -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Users</h3>
+          <p id="statUsers">0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Total Documents</h3>
+          <p id="statDocs">0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Notifications Sent</h3>
+          <p id="statNotifications">0</p>
+        </div>
+      </div>
+
+      <!-- ===== Charts Row ===== -->
+      <div class="charts-row">
+
+        <!-- ===== Doughnut Chart ===== -->
+        <div class="card chart-card">
+          <div class="card-header">
+            Activity Analytics
+            <span class="download-link" onclick="AdminController.downloadChart('activityChart')">
+              ⬇ Download
+            </span>
+          </div>
+          <canvas id="activityChart"></canvas>
+        </div>
+
+        <!-- ===== Timeline Chart ===== -->
+        <div class="card chart-card">
+          <div class="card-header">
+            Activity Over Time
+            <span class="download-link" onclick="AdminController.downloadChart('timelineChart')">
+              ⬇ Download
+            </span>
+          </div>
+
+          <!-- Filters moved inside timeline card -->
+          <div class="timeline-controls">
+
+            <div class="filter-group">
+              <label>Show</label>
+              <select onchange="AdminController.setActivityFilter(this.value)">
+                <option value="all">All Activity</option>
+                <option value="uploads">Uploads Only</option>
+                <option value="notifications">Notifications Only</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>Time Range</label>
+              <select onchange="AdminController.setTimeMode(this.value)">
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+
+          </div>
+
+          <canvas id="timelineChart"></canvas>
+        </div>
+
+      </div>
+
+      <!-- ===== Latest Activity ===== -->
+      <div class="card">
+        <div class="card-header">Latest Activity</div>
+        <p><b>Last Uploaded File:</b> <span id="lastUpload">None</span></p>
+        <p><b>Last Notification:</b> <span id="lastNotification">None</span></p>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<!-- Shared JS (toast + sidebar functions) -->
+<script src="../js/shared-script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/admin-script.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    await loadSharedToast();
+    await loadSharedSidebar("sidebarMount");
+    setSidebarRole("admin");
+  });
+</script>
+
+</body>
+</html>

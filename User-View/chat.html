@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Section: Document Head -->
+<head>
+  <meta charset="UTF-8">
+  <title>Chat - Mujeeb KAU</title>
+  <link rel="stylesheet" href="../css/UserView-styles.css">
+  <link rel="stylesheet" href="../css/shared-style.css" />
+
+</head>
+
+<body>
+
+  <!-- Section: Application Shell -->
+  <div class="app-shell" id="authArea">
+    <!-- Section: Sidebar Navigation -->
+    <div class="sidebar-overlay hidden" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div id="sidebarMount"></div>
+
+    <!-- Section: Main Content -->
+    <main class="main-content">
+
+      <div class="container">
+
+        <h2>Mujeeb KAU</h2>
+
+        <!-- Section: Chat Interface -->
+        <div class="chat-container">
+
+          <div class="chat-messages" id="chatMessages">
+            <!-- Section: Welcome Message -->
+            <div class="welcome-hero">
+              <h1 class="welcome-heading">مرحبًا، أنا مجيب</h1>
+              <p class="welcome-subtitle">
+                مساعدك الأكاديمي الذكي في جامعة الملك عبدالعزيز.<br>
+                اسأل عن القبول، المواعيد الأكاديمية، اللوائح الجامعية، والمزيد.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section: Chat Input -->
+          <div class="chat-input-bar">
+            <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا...">
+            <button class="send-btn" onclick="sendMessage()">إرسال</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Section: External Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Section: Page Logic -->
+  <script src="../js/shared-script.js"></script>
+  <script src="../js/UserView-script.js"></script>
+
+  <!-- Section: Initialization Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+      await loadSharedSidebar("sidebarMount");
+      setSidebarRole("user");
+    });
+  </script>
+
+</body>
+
+</html>

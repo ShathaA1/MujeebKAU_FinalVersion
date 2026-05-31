@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Profile - Mujeeb KAU</title>
+
+  <!-- Main stylesheet for Sara section -->
+  <link rel="stylesheet" href="../css/public-style.css" />
+
+  <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+
+</head>
+
+<body>
+
+  <div class="app-shell" id="authArea">
+    <div class="sidebar-overlay hidden" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div id="sidebarMount"></div>
+
+    <main class="main-content">
+      <div class="container">
+
+        <!-- Regular user dashboard (hidden in admin view) -->
+        <div id="userDashboard" class="hidden"></div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard">
+          <div id="adminProfilePage">
+
+            <div class="card">
+              <div class="card-header">Admin Profile</div>
+
+              <!-- Section: Account Information -->
+              <h3 class="section-title">Account Info</h3>
+
+              <!-- Full Name field -->
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="adminProfileName">
+              </div>
+              
+
+              <!-- Email field (read-only) -->
+              <div class="form-group">
+                <label>Email</label>
+                <input type="text" id="adminProfileEmail" readonly>
+              </div>
+
+              <!-- User type (Admin only - read-only) -->
+              <div class="form-group">
+                <label>User Type</label>
+                <input type="text" id="adminRole" value="Admin" readonly>
+              </div>
+
+              <!-- Gender field (read-only) -->
+              <div class="form-group">
+  <label>Gender</label>
+  <input type="text" id="adminGender" readonly>
+</div>
+
+              <!-- College field (read-only) -->
+              <div class="form-group">
+  <label>College</label>
+  <input type="text" id="adminCollege" readonly>
+</div>
+
+              <!-- Button: Save account info -->
+              <button class="btn btn-success" onclick="saveAdminProfile()">Save Account Info</button>
+
+              <div class="sidebar-divider"></div>
+
+              <!-- Section: Security -->
+              <h3 class="section-title">Security</h3>
+
+              <!-- Button: Show/hide password change form -->
+              <button class="btn btn-success" type="button" onclick="toggleAdminChangePassword()">
+                Change Password
+              </button>
+
+              <!-- Password change form (initially hidden) -->
+              <div id="adminChangePasswordBox" class="hidden" style="margin-top:16px;">
+
+
+                <!-- Current Password field -->
+                <div class="form-group">
+                  <label>Current Password</label>
+
+                  <div class="password-wrap">
+                    <input type="password" id="adminCurrentPassword">
+                    <button type="button" class="pass-toggle" onclick="togglePassword('adminCurrentPassword', this)">
+                      👁
+                    </button>
+                  </div>
+                </div>
+
+                <!-- New Password field -->
+                <div class="form-group">
+                  <label>New Password</label>
+
+                  <div class="password-wrap">
+                    <input type="password" id="adminNewPassword">
+                    <button type="button" class="pass-toggle" onclick="togglePassword('adminNewPassword', this)">
+                      👁
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Confirm Password field -->
+                <div class="form-group">
+                  <label>Confirm Password</label>
+
+                  <div class="password-wrap">
+                    <input type="password" id="adminConfirmNewPassword">
+                    <button type="button" class="pass-toggle" onclick="togglePassword('adminConfirmNewPassword', this)">
+                      👁
+                    </button>
+                  </div>
+                </div>
+
+
+                <!-- Button: Save new password -->
+                <button class="btn btn-success" type="button" onclick="saveAdminNewPassword()">
+                  Save New Password
+                </button>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/shared-script.js"></script>
+  <script src="../js/public-script.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+      await loadSharedSidebar("sidebarMount");
+      setSidebarRole("admin");
+              loadAdminProfile();
+
+    });
+  </script>
+
+</body>
+
+</html>

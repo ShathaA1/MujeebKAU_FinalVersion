@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Send Notification</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/admin-styles.css">
+
+  <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+
+
+  <!-- Flatpickr Date & Time Picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/en.js"></script>
+</head>
+
+<body>
+
+  <div class="app-shell" id="authArea">
+    <div class="sidebar-overlay hidden" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div id="sidebarMount"></div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main-content">
+      <div class="container">
+
+        <div class="card">
+
+          <!-- Header -->
+          <div class="card-header">
+            <span>Create Notification</span>
+            <button class="btn btn-outline small-btn" onclick="location.href='admin-notifications-history.html'">
+              View Sent Notifications
+            </button>
+          </div>
+
+          <!-- Notification Type -->
+          <div class="form-group">
+            <label>Notification Type</label>
+            <select id="notifyType">
+              <option value="announcement">Announcement</option>
+              <option value="warning">Warning</option>
+              <option value="deadline">Deadline</option>
+              <option value="update">Update</option>
+            </select>
+          </div>
+
+          <!-- Department selection -->
+          <div class="form-group">
+            <label>College</label>
+            <select id="notifyCollege">
+              <option value="">Select college</option>
+
+              <option value="all">All Colleges</option>
+              <option value="Medicine">Medicine</option>
+              <option value="Applied Medical Sciences">Applied Medical Sciences</option>
+              <option value="Dentistry">Dentistry</option>
+              <option value="Pharmacy">Pharmacy</option>
+              <option value="Nursing">Nursing</option>
+              <option value="Medical Rehabilitation Sciences">Medical Rehabilitation Sciences</option>
+              <option value="Applied Faculty">Applied Faculty</option>
+              <option value="Sciences">Sciences</option>
+              <option value="Marine Sciences">Marine Sciences</option>
+              <option value="Human Sciences and Design">Human Sciences and Design</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Environmental Sciences">Environmental Sciences</option>
+              <option value="Tourism">Tourism</option>
+              <option value="Architecture and Planning">Architecture and Planning</option>
+              <option value="Computing and Information Technology">Computing and Information Technology</option>
+              <option value="Economics and Administration">Economics and Administration</option>
+              <option value="Earth Sciences">Earth Sciences</option>
+              <option value="Maritime Studies">Maritime Studies</option>
+              <option value="Arts and Humanities">Arts and Humanities</option>
+              <option value="Law">Law</option>
+              <option value="Education">Education</option>
+              <option value="Communication and Media">Communication and Media</option>
+
+            </select>
+          </div>
+
+          <!-- Title -->
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="notifyTitle" required>
+          </div>
+
+          <!-- Message -->
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="notifyMessage" rows="4" required></textarea>
+          </div>
+
+          <!-- Audience -->
+          <div class="form-group">
+            <label>Target Users</label>
+            <select id="notifyAudience">
+              <option value="all">All Users</option>
+              <option value="students">Students</option>
+              <option value="faculty">Faculty Members</option>
+            </select>
+          </div>
+
+          <!-- Schedule (NOW REQUIRED) -->
+          <div class="form-group">
+            <label>Send Time</label>
+            <div class="schedule-row">
+              <input type="text" id="notifyDateTime" placeholder="Select date & time" required>
+            </div>
+          </div>
+
+          <!-- Live Preview -->
+          <div class="preview-box" id="notifyPreview">
+            <h4>Live Preview</h4>
+            <p><strong id="previewTitle">Title will appear here</strong></p>
+            <p id="previewMessage">Message preview will appear here</p>
+          </div>
+
+          <!-- Send Button -->
+          <button class="btn full-btn" onclick="AdminNotifyController.sendNotification()">
+            Send Notification
+          </button>
+
+          <div id="notifyStatus" class="status-text"></div>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Shared JS (toast + sidebar functions) -->
+  <script src="../js/shared-script.js"></script>
+  <script src="../js/admin-script.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+      await loadSharedSidebar("sidebarMount");
+      setSidebarRole("admin");
+      
+    await initAdminNotificationsPage();
+    });
+  </script>
+
+</body>
+
+</html>

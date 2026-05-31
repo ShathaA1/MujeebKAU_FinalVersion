@@ -1,0 +1,100 @@
+<!-- MUJEEBKAU/sharing/sidebar.html -->
+<div id="mkSharedShell">
+<div class="layout-wrapper">
+
+  <!-- Shared topbar displayed across authenticated pages -->
+  <header class="auth-topbar">
+    <div class="auth-topbar-inner">
+
+
+      <!-- Topbar brand area (logo + project name) -->
+      <div class="auth-topbar-brand" title="Dashboard">
+
+                            <!-- Mobile menu button -->
+      <button class="menu-btn" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+
+        <div class="logo-icon">
+          <img src="logo.png" alt="Logo">
+        </div>
+
+        <div class="brand-text">
+          <h2>Mujeeb KAU</h2>
+          <p id="topbarRoleLabel">Dashboard</p>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- Shared sidebar menu -->
+  <aside class="mk-sidebar" aria-label="Sidebar Menu">
+
+    <div class="sidebar-top">
+
+      <!-- Sidebar brand area (logo + project name) -->
+      <div class="sidebar-brand" title="Dashboard">
+        <div class="logo-icon">
+          <img src="logo.png" alt="Logo">
+        </div>
+
+        <div class="brand-text">
+          <h2>Mujeeb KAU</h2>
+          <p>Academic Assistant</p>
+        </div>
+      </div>
+
+      <!-- Sidebar close button -->
+      <button class="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">×</button>
+    </div>
+
+    <!-- User menu section -->
+    <div class="sidebar-section hidden" id="userMenu">
+      <p class="sidebar-title">User</p>
+
+      <!-- Chat section -->
+<div class="chat-wrapper">
+
+  <button class="side-link chat-toggle" onclick="toggleChatHistory()">
+    💬 Chat
+    <span class="arrow" id="chatArrow">▼</span>
+  </button>
+
+  <div id="chatHistory">
+
+  <button id="newChatBtn" class="side-link sub-item new-chat-btn" onclick="createNewChat()">
+    ✏️ New Chat
+  </button>
+
+  </div>
+
+</div>
+
+      <button class="side-link" data-link="User-view/notifications.html">🔔 Notifications</button>
+
+      <button class="side-link" id="gpaNavBtn" data-link="User-view/gpa.html">📊 GPA Calculator</button>
+
+      <button class="side-link" data-link="public/user-profile.html">👤 Profile</button>
+    </div>
+
+    <!-- Admin menu section -->
+    <div class="sidebar-section hidden" id="adminMenu">
+      <p class="sidebar-title">Admin</p>
+
+      <button class="side-link" data-link="admin-view/admin-overview.html">📊 Overview</button>
+      <button class="side-link" data-link="admin-view/admin-update.html">📝 Update Document</button>
+      <button class="side-link" data-link="admin-view/admin-notify.html">📢 Send Notification</button>
+
+      <button class="side-link" data-link="public/admin-profile.html">👤 Profile</button>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <!-- Logout button -->
+    <button class="side-link danger" onclick="handleLogout(); closeSidebar();">🚪 Log Out</button>
+
+  </aside>
+
+</div>
+</div>

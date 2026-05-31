@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mujeeb KAU - Academic Assistant</title>
+
+  <!-- Main stylesheet for public-facing pages -->
+  <link rel="stylesheet" href="../css/public-style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+
+    <!-- Branding section with logo and app title -->
+    <div class="topbar-brand" onclick="goPublic('landing')" title="Go Home">
+
+      <div class="logo-icon">
+        <!-- Main logo image -->
+        <img src="../sharing/logo.png" alt="Logo">
+      </div>
+
+      <div class="brand-text">
+        <!-- System name -->
+        <h2>Mujeeb KAU</h2>
+
+        <!-- Short platform description -->
+        <p>Academic Assistant</p>
+      </div>
+
+    </div>
+
+    <!-- Login and account creation buttons -->
+    <div class="topbar-actions">
+      <button class="top-link" onclick="goPublic('login')">Log In</button>
+      <button class="top-link primary" onclick="goPublic('signup')">Create Account</button>
+      <!-- <button onclick="localStorage.clear(); location.reload();">Reset App</button> -->
+
+    </div>
+
+  </div>
+</header>
+
+<main class="public-main">
+  <div class="container">
+
+    <div class="hero">
+
+  <div class="hero-icon">
+    <img src="../sharing/logo.png" alt="Logo">
+  </div>
+
+  <h1>Welcome to Mujeeb KAU</h1>
+
+  <p>Your Intelligent Academic Assistant at King Abdulaziz University</p>
+
+  <!-- Start Chat Button -->
+  <div class="hero-actions">
+    <!-- Start Chat button (styled exactly like Create Account button) -->
+<button class="top-link primary start-chat-btn" onclick="startGuestChat()">
+  💬 Start Chatting
+</button>
+
+  </div>
+
+</div>
+
+</main>
+
+<!-- Main script handling navigation and public functions -->
+<script src="../js/public-script.js"></script>
+
+</body>
+</html>

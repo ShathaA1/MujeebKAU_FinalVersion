@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify Email - Mujeeb KAU</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/public-style.css" />
+  <link rel="stylesheet" href="../css/shared-style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand" onclick="goPublic('landing')" title="Go Home">
+        <div class="logo-icon">
+          <img src="../sharing/logo.png" alt="Logo">
+        </div>
+        <div class="brand-text">
+          <h2>Mujeeb KAU</h2>
+          <p>Academic Assistant</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="top-link" onclick="goPublic('login')">Log In</button>
+        <button class="top-link primary" onclick="goPublic('signup')">Create Account</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="public-main">
+    <div class="container">
+
+      <!-- ── 2-Step Progress Bar (signup flow) ──────────────── -->
+      <div class="flow-steps" aria-label="Email verification progress">
+        <div class="flow-step done">
+          <div class="step-circle">✓</div>
+          <span class="step-label">Sign Up</span>
+        </div>
+        <div class="flow-connector done"></div>
+        <div class="flow-step active">
+          <div class="step-circle">2</div>
+          <span class="step-label">Verify Email</span>
+        </div>
+      </div>
+
+      <div class="card auth-card">
+
+        <!-- Step badge -->
+        <div class="step-badge">Almost done — verify your email</div>
+
+        <!-- Icon -->
+        <div class="auth-icon-wrap">
+          <div class="auth-icon">📬</div>
+        </div>
+
+        <div class="card-header">Check Your Inbox</div>
+        <p class="auth-subtitle" id="verifyEmailNote">
+          We sent a verification code to your email address. Enter it below to activate your account.
+        </p>
+
+        <!-- Verification code input -->
+        <div class="form-group">
+          <label for="verifyEmailCode">Verification Code</label>
+          <input
+            type="text"
+            id="verifyEmailCode"
+            placeholder="Enter verification code"
+            maxlength="10"
+            autocomplete="one-time-code"
+            inputmode="numeric"
+            autofocus
+          />
+          <p class="field-hint">📧 Check your inbox and spam folder — the code expires in 15 minutes</p>
+          <p class="field-error" id="verifyEmailCodeError"></p>
+        </div>
+
+        <button id="verifyEmailBtn" class="btn btn-success btn-full" onclick="handleVerifyEmail()">
+          Verify &amp; Activate Account →
+        </button>
+
+        <div class="verify-email-resend">
+          <span class="resend-text">Didn't receive the code?</span>
+          <button id="resendEmailCodeBtn" type="button" class="link-button" onclick="handleResendVerificationCode()">
+            Resend Code
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/shared-script.js"></script>
+  <script src="../js/public-script.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+
+      // Show the email address the code was sent to
+      const savedEmail = localStorage.getItem("verify_email");
+      if (savedEmail) {
+        const note = document.getElementById("verifyEmailNote");
+        if (note) {
+          note.innerHTML =
+            `We sent a verification code to <strong>${savedEmail}</strong>. ` +
+            `Enter it below to activate your account.`;
+        }
+      }
+
+      // Focus the code input
+      const codeInput = document.getElementById("verifyEmailCode");
+      if (codeInput) codeInput.focus();
+
+      // Inline validation on blur
+      const err = document.getElementById("verifyEmailCodeError");
+      codeInput.addEventListener("blur", () => {
+        const v = codeInput.value.trim();
+        if (!v) { codeInput.classList.remove("input-error","input-valid"); err.style.display="none"; return; }
+        if (v.length < 4) {
+          codeInput.classList.add("input-error"); codeInput.classList.remove("input-valid");
+          err.textContent = "⚠ Code seems too short — please double-check";
+          err.style.display = "block";
+        } else {
+          codeInput.classList.remove("input-error"); codeInput.classList.add("input-valid");
+          err.style.display = "none";
+        }
+      });
+      codeInput.addEventListener("focus", () => {
+        codeInput.classList.remove("input-error","input-valid"); err.style.display="none";
+      });
+    });
+  </script>
+
+</body>
+</html>

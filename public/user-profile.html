@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensures the page is responsive on all devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>User Profile - Mujeeb KAU</title>
+
+  <!-- Main stylesheet for user pages -->
+  <link rel="stylesheet" href="../css/public-style.css" />
+
+  <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+</head>
+
+<body>
+
+  <div class="app-shell" id="authArea">
+    <div class="sidebar-overlay hidden" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Shared sidebar will be injected here -->
+    <div id="sidebarMount"></div>
+
+    <main class="main-content">
+      <div class="container">
+
+        <!-- User dashboard area -->
+        <div id="userDashboard">
+
+          <div id="profilePage">
+            <div class="card">
+
+              <!-- Card header -->
+              <div class="card-header">Profile Settings</div>
+
+              <!-- Account information section -->
+              <h3 class="section-title">Account Info</h3>
+
+              <!-- Editable -->
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" id="profileFirstName" placeholder="Enter first name">
+              </div>
+
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" id="profileLastName" placeholder="Enter last name">
+              </div>
+
+              <!-- Read-only -->
+              <div class="form-group">
+                <label>Email</label>
+                <input type="text" id="profileEmail" readonly>
+              </div>
+
+              <div class="form-group">
+                <label>User Type</label>
+                <input type="text" id="profileType" readonly>
+              </div>
+
+              <div class="form-group">
+                <label>Gender</label>
+                <input type="text" id="profileGender" readonly>
+              </div>
+
+              <!-- Editable -->
+              <div class="form-group">
+                <label>College</label>
+                <select id="profileDepartment">
+                  <option value="">Select college</option>
+                  <option value="Medicine">Medicine</option>
+                  <option value="Applied Medical Sciences">Applied Medical Sciences</option>
+                  <option value="Dentistry">Dentistry</option>
+                  <option value="Pharmacy">Pharmacy</option>
+                  <option value="Nursing">Nursing</option>
+                  <option value="Medical Rehabilitation Sciences">Medical Rehabilitation Sciences</option>
+                  <option value="Applied Faculty">Applied Faculty</option>
+                  <option value="Sciences">Sciences</option>
+                  <option value="Marine Sciences">Marine Sciences</option>
+                  <option value="Human Sciences and Design">Human Sciences and Design</option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Environmental Sciences">Environmental Sciences</option>
+                  <option value="Tourism">Tourism</option>
+                  <option value="Architecture and Planning">Architecture and Planning</option>
+                  <option value="Computing and Information Technology">Computing and Information Technology</option>
+                  <option value="Economics and Administration">Economics and Administration</option>
+                  <option value="Earth Sciences">Earth Sciences</option>
+                  <option value="Maritime Studies">Maritime Studies</option>
+                  <option value="Arts and Humanities">Arts and Humanities</option>
+                  <option value="Law">Law</option>
+                  <option value="Education">Education</option>
+                  <option value="Communication and Media">Communication and Media</option>
+                </select>
+              </div>
+
+              <!-- Save account info button -->
+              <button id="saveProfileBtn" class="btn btn-success" type="button" onclick="updateProfile()">
+                Save Account Info
+              </button>
+
+              <div class="sidebar-divider"></div>
+
+              <!-- Security section -->
+              <h3 class="section-title">Security</h3>
+
+              <!-- Button to toggle password change form -->
+              <button class="btn btn-success" type="button" onclick="toggleChangePassword()">
+                Change Password
+              </button>
+
+              <!-- Password change panel (initially hidden) -->
+              <div id="changePasswordBox" class="hidden" style="margin-top:16px;">
+
+                <div class="form-group">
+                  <label>Current Password</label>
+
+                  <div class="password-wrap">
+                    <input type="password" id="userCurrentPassword">
+                    <button type="button" class="pass-toggle" onclick="togglePassword('userCurrentPassword', this)">
+                      👁
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>New Password</label>
+
+                  <div class="password-wrap">
+                    <input type="password" id="newProfilePassword">
+                    <button type="button" class="pass-toggle" onclick="togglePassword('newProfilePassword', this)">
+                      👁
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Confirm Password</label>
+
+                  <div class="password-wrap">
+                    <input type="password" id="confirmNewProfilePassword">
+                    <button type="button" class="pass-toggle"
+                      onclick="togglePassword('confirmNewProfilePassword', this)">
+                      👁
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Save new password button -->
+                <button id="savePasswordBtn" class="btn btn-success" type="button" onclick="saveNewPassword()">
+                  Save New Password
+                </button>
+
+              </div>
+
+              <div class="sidebar-divider"></div>
+
+              <!-- Preferences section -->
+              <h3 class="section-title">Preferences</h3>
+
+              <!-- Notification toggle -->
+              <div class="pref-row">
+                <div>
+                  <div class="pref-title">Notifications</div>
+                  <div class="pref-desc">Enable or disable system notifications</div>
+                </div>
+
+                <!-- Toggle switch -->
+                <label class="switch" aria-label="Toggle Notifications">
+                  <input type="checkbox" id="prefNotifications" onchange="savePreferences()">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="sidebar-divider"></div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Admin dashboard (hidden for regular users) -->
+        <div id="adminDashboard" class="hidden"></div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Shared JS (toast + sidebar functions) -->
+  <script src="../js/shared-script.js"></script>
+
+  <!-- Main script for user profile and auth logic -->
+  <script src="../js/public-script.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+      await loadSharedSidebar("sidebarMount");
+      setSidebarRole("user");
+      loadUserProfile();
+    });
+  </script>
+
+</body>
+
+</html>

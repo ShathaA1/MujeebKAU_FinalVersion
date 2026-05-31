@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Document metadata and styles -->
+<head>
+  <meta charset="UTF-8">
+  <title>Notifications - Mujeeb KAU</title>
+  <link rel="stylesheet" href="../../css/UserView-styles.css">
+  <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+
+</head>
+
+<body>
+
+  <!-- Application layout and shell -->
+  <div class="app-shell" id="authArea">
+    <div class="sidebar-overlay hidden" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div id="sidebarMount"></div>
+
+    <main class="main-content">
+      <!-- MAIN CONTENT -->
+
+      <div class="container">
+
+        <h2>Notifications</h2>
+
+        <!-- Notification management controls -->
+        <div class="controls">
+          <button class="delete-all-btn" onclick="deleteAllNotifications()">
+            🗑 Delete All
+          </button>
+
+          <button class="mark-all-btn" onclick="markAllAsRead()">
+            ✔ Mark All as Read
+          </button>
+
+        </div>
+
+        <!-- Notifications container -->
+        <div id="notifications-container"></div>
+
+        <!-- Empty state message -->
+        <p id="empty-message" style="display:none;">
+          No notifications available
+        </p>
+
+    </main>
+  </div>
+
+  <!-- External dependencies -->
+  <script src="../js/shared-script.js"></script>
+
+  <script src="../../js/UserView-script.js"></script>
+
+  <!-- Initialization and data loading -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+      await loadSharedSidebar("sidebarMount");
+      setSidebarRole("user");
+
+      loadNotifications(); // Fetch and render user notifications
+    });
+  </script>
+
+</body>
+
+</html>

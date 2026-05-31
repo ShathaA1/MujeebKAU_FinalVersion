@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In - Mujeeb KAU</title>
+
+  <!-- Google Font: Inter for modern, clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Main stylesheet for the user interface -->
+  <link rel="stylesheet" href="../css/public-style.css" />
+
+  <!-- Shared styles (e.g., Toast notifications) -->
+  <!-- ⚠️ Note: If this file is located deeper in folders, adjust ../../ accordingly -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+
+      <!-- Logo and link back to the homepage -->
+      <div class="topbar-brand" onclick="goPublic('landing')" title="Go Home">
+        <div class="logo-icon">
+          <img src="../sharing/logo.png" alt="Logo">
+        </div>
+
+        <div class="brand-text">
+          <h2>Mujeeb KAU</h2>
+          <p>Academic Assistant</p>
+        </div>
+      </div>
+
+      <!-- Login and Create Account buttons -->
+      <div class="topbar-actions">
+        <button class="top-link" onclick="goPublic('login')">Log In</button>
+        <button class="top-link primary" onclick="goPublic('signup')">Create Account</button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="public-main">
+    <div class="container">
+
+      <div class="card">
+        <!-- Page title -->
+        <div class="card-header">Log In</div>
+
+        <!-- Email input field -->
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="example@stu.kau.edu.sa" autocomplete="email"
+            spellcheck="false" />
+          <!-- Domain hint -->
+          <p class="field-hint" id="loginEmailHint">
+            🎓 Only KAU emails are accepted &nbsp;·&nbsp;
+            <span class="hint-domain">@stu.kau.edu.sa</span> or
+            <span class="hint-domain">@kau.edu.sa</span>
+          </p>
+          <!-- Inline validation message (hidden by default) -->
+          <p class="field-error" id="loginEmailError"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+
+          <div class="password-wrap">
+            <input type="password" id="loginPassword" placeholder="Enter your password"
+              autocomplete="current-password" />
+            <button type="button" class="pass-toggle" onclick="togglePassword('loginPassword', this)">
+              👁
+            </button>
+          </div>
+          <p class="field-error" id="loginPasswordError"></p>
+        </div>
+
+        <button id="loginBtn" class="btn btn-success" onclick="handleLogin()">Log In</button>
+        <!-- Link to forgot password page -->
+        <div class="text-center mt-20">
+          <span class="link" onclick="goPublic('forgotPassword')">Forgot Password?</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Shared script (Toast + Sidebar functions) -->
+  <script src="../js/shared-script.js"></script>
+
+  <!-- Main script handling login, signup, and related functions -->
+  <script src="../js/public-script.js"></script>
+
+  <script>
+    // ── Initialize toast + wire up UX enhancements ────────────────────────────
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+      _initLoginFormUX();
+    });
+
+    // KAU domain validation pattern (frontend UX only — backend validates independently)
+    const _KAU_PATTERN = /^[a-zA-Z0-9._%+\-]+@(stu\.kau\.edu\.sa|kau\.edu\.sa)$/;
+
+    function _setInputState(inputEl, errorEl, isError, message) {
+      if (isError) {
+        inputEl.classList.add("input-error");
+        inputEl.classList.remove("input-valid");
+        errorEl.textContent = message;
+        errorEl.style.display = "block";
+      } else {
+        inputEl.classList.remove("input-error");
+        inputEl.classList.add("input-valid");
+        errorEl.textContent = "";
+        errorEl.style.display = "none";
+      }
+    }
+
+    function _clearInputState(inputEl, errorEl) {
+      inputEl.classList.remove("input-error", "input-valid");
+      errorEl.textContent = "";
+      errorEl.style.display = "none";
+    }
+
+    function _initLoginFormUX() {
+      const emailInput = document.getElementById("loginEmail");
+      const emailError = document.getElementById("loginEmailError");
+      const passInput = document.getElementById("loginPassword");
+      const passError = document.getElementById("loginPasswordError");
+
+      if (!emailInput || !emailError) return;
+
+      // ── Domain auto-suggest ──────────────────────────────────────────────────
+      // When user types a plain username (no @), offer smart completion.
+      emailInput.addEventListener("input", () => {
+        const val = emailInput.value;
+        // If there's no @ symbol and the user has typed something, show suggestion
+        if (val && !val.includes("@")) {
+          const suggested = val + "@stu.kau.edu.sa";
+          const hint = document.getElementById("loginEmailHint");
+          if (hint) {
+            hint.innerHTML =
+              `💡 Did you mean <button type="button" class="suggest-btn" onclick="
+                document.getElementById('loginEmail').value='${suggested}';
+                this.parentElement.innerHTML='🎓 Only KAU emails are accepted &nbsp;·&nbsp;<span class=\\'hint-domain\\'>@stu.kau.edu.sa</span> or <span class=\\'hint-domain\\'>@kau.edu.sa</span>';
+                document.getElementById('loginEmail').dispatchEvent(new Event('blur'));
+              ">${suggested}</button>?`;
+          }
+          _clearInputState(emailInput, emailError);
+          return;
+        }
+        // Restore normal hint if user typed an @
+        const hint = document.getElementById("loginEmailHint");
+        if (hint && !val.includes("Did you mean")) {
+          hint.innerHTML =
+            '🎓 Only KAU emails are accepted &nbsp;·&nbsp;<span class="hint-domain">@stu.kau.edu.sa</span> or <span class="hint-domain">@kau.edu.sa</span>';
+        }
+        if (!val) _clearInputState(emailInput, emailError);
+      });
+
+      // ── Blur validation — email ───────────────────────────────────────────────
+      emailInput.addEventListener("blur", () => {
+        const val = emailInput.value.trim();
+        if (!val) { _clearInputState(emailInput, emailError); return; }
+        if (!_KAU_PATTERN.test(val)) {
+          _setInputState(emailInput, emailError, true,
+            "⚠ Must be a KAU email ending in @stu.kau.edu.sa or @kau.edu.sa");
+        } else {
+          _setInputState(emailInput, emailError, false, "");
+        }
+      });
+
+      // Clear error as soon as user starts correcting the email
+      emailInput.addEventListener("focus", () => {
+        _clearInputState(emailInput, emailError);
+      });
+
+      // ── Blur validation — password ────────────────────────────────────────────
+      if (passInput && passError) {
+        passInput.addEventListener("blur", () => {
+          const val = passInput.value;
+          if (!val) { _clearInputState(passInput, passError); return; }
+          if (val.length < 8) {
+            _setInputState(passInput, passError, true, "⚠ Password must be at least 8 characters");
+          } else {
+            _setInputState(passInput, passError, false, "");
+          }
+        });
+        passInput.addEventListener("focus", () => _clearInputState(passInput, passError));
+      }
+    }
+  </script>
+
+</body>
+
+</html>

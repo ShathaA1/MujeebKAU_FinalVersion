@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mujeeb KAU – Notifications History</title>
+       <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+  <link rel="stylesheet" href="../css/admin-styles.css" />
+          <!-- Shared sidebar stylesheet -->
+  <link rel="stylesheet" href="../css/shared-style.css" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/en.js"></script>
+
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  
+  <!-- ===== Main Content ===== -->
+  <main class="main-content">
+    <div class="container">
+
+      <div class="card">
+        
+<div class="card-header">
+          <span>Sent Notifications</span>
+          <span class="back-arrow" onclick="location.href='admin-notify.html'">←</span>
+        </div>
+        <!-- ===== Filters Row ===== -->
+<div class="filters-row">
+
+  <div class="filter-group">
+    <label>Target Users</label>
+    <select id="filterAudience" onchange="applyNotificationFilters()">
+      <option value="all">All</option>
+      <option value="students">Student</option>
+      <option value="faculty">Faculty Members</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Type</label>
+    <select id="filterType" onchange="applyNotificationFilters()">
+      <option value="all">All</option>
+      <option value="announcement">Announcement</option>
+      <option value="warning">Warning</option>
+      <option value="deadline">Deadline</option>
+      <option value="update">Update</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Status</label>
+    <select id="filterStatus" onchange="applyNotificationFilters()">
+      <option value="all">All</option>
+      <option value="scheduled">Scheduled</option>
+      <option value="sent">Sent</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>College</label>
+    <select id="filterCollege" onchange="applyNotificationFilters()">
+      <option value="all">All Colleges</option>
+      <option value="Medicine">Medicine</option>
+      <option value="Applied Medical Sciences">Applied Medical Sciences</option>
+      <option value="Dentistry">Dentistry</option>
+      <option value="Pharmacy">Pharmacy</option>
+      <option value="Nursing">Nursing</option>
+      <option value="Medical Rehabilitation Sciences">Medical Rehabilitation Sciences</option>
+      <option value="Applied Faculty">Applied Faculty</option>
+      <option value="Sciences">Sciences</option>
+      <option value="Marine Sciences">Marine Sciences</option>
+      <option value="Human Sciences and Design">Human Sciences and Design</option>
+      <option value="Engineering">Engineering</option>
+      <option value="Environmental Sciences">Environmental Sciences</option>
+      <option value="Tourism">Tourism</option>
+      <option value="Architecture and Planning">Architecture and Planning</option>
+      <option value="Computing and Information Technology">Computing and Information Technology</option>
+      <option value="Economics and Administration">Economics and Administration</option>
+      <option value="Earth Sciences">Earth Sciences</option>
+      <option value="Maritime Studies">Maritime Studies</option>
+      <option value="Arts and Humanities">Arts and Humanities</option>
+      <option value="Law">Law</option>
+      <option value="Education">Education</option>
+      <option value="Communication and Media">Communication and Media</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Date Range</label>
+    <div class="date-range-container">
+      <input type="text" id="filterDateFrom" placeholder="From" onchange="applyNotificationFilters()">
+      <span class="date-separator">to</span>
+      <input type="text" id="filterDateTo" placeholder="To" onchange="applyNotificationFilters()">
+    </div>
+  </div>
+
+  <div class="filter-group">
+    <label>&nbsp;</label>
+    <button class="btn btn-reset" onclick="resetFilters()">Reset Filters</button>
+  </div>
+
+</div>
+
+
+
+        <table class="updates-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Target Users</th>
+              <th>Type</th>
+              <th>College</th>
+              <th>Send Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="notificationsHistoryTable">
+            <tr>
+              <td colspan="7" style="text-align:center; color:#888;">
+                No notifications sent yet
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<!-- ================= Notification Modal ================= -->
+<div id="notificationModal" class="modal hidden">
+  <div class="modal-content">
+
+    <span class="modal-close" onclick="closeModal()">×</span>
+
+    <!-- ===== VIEW MODE ===== -->
+    <div id="modalViewSection">
+      <h3 id="modalTitle" class="modal-title"></h3>
+
+      <p><b>Message:</b> <span class="modal-value" id="modalMessage"></span></p>
+      <p><b>Target Users:</b> <span class="modal-value" id="modalAudience"></span></p>
+      <p><b>Type:</b> <span class="modal-value" id="modalType"></span></p>
+      <p><b>College:</b> <span class="modal-value" id="modalCollege"></span></p>
+      <p><b>Send Time:</b> <span class="modal-value" id="modalSchedule"></span></p>
+    </div>
+
+    <!-- ===== EDIT MODE ===== -->
+    <div id="modalEditSection" class="hidden">
+
+      <h3 class="modal-title">Edit Notification</h3>
+
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="editTitle">
+      </div>
+      
+      <!-- Department selection -->
+          <div class="form-group">
+            <label>College</label>
+            <select id="editCollege">
+              <option value="">Select college</option>
+
+              <option value="all">All Colleges</option>
+              <option value="Medicine">Medicine</option>
+              <option value="Applied Medical Sciences">Applied Medical Sciences</option>
+              <option value="Dentistry">Dentistry</option>
+              <option value="Pharmacy">Pharmacy</option>
+              <option value="Nursing">Nursing</option>
+              <option value="Medical Rehabilitation Sciences">Medical Rehabilitation Sciences</option>
+              <option value="Applied Faculty">Applied Faculty</option>
+              <option value="Sciences">Sciences</option>
+              <option value="Marine Sciences">Marine Sciences</option>
+              <option value="Human Sciences and Design">Human Sciences and Design</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Environmental Sciences">Environmental Sciences</option>
+              <option value="Tourism">Tourism</option>
+              <option value="Architecture and Planning">Architecture and Planning</option>
+              <option value="Computing and Information Technology">Computing and Information Technology</option>
+              <option value="Economics and Administration">Economics and Administration</option>
+              <option value="Earth Sciences">Earth Sciences</option>
+              <option value="Maritime Studies">Maritime Studies</option>
+              <option value="Arts and Humanities">Arts and Humanities</option>
+              <option value="Law">Law</option>
+              <option value="Education">Education</option>
+              <option value="Communication and Media">Communication and Media</option>
+
+            </select>
+          </div>
+
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="editMessage" rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Target Users</label>
+        <select id="editAudience">
+          <option value="all">All Users</option>
+          <option value="students">Students Only</option>
+          <option value="faculty">Faculty Only</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Notification Type</label>
+        <select id="editType">
+          <option value="announcement">Announcement</option>
+          <option value="warning">Warning</option>
+          <option value="deadline">Deadline</option>
+          <option value="update">Update</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Send Time</label>
+        <input type="text" id="editSchedule">
+      </div>
+
+      <button class="btn full-btn" onclick="saveEdit()">Save Changes</button>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Shared JS (toast + sidebar functions) -->
+<script src="../js/shared-script.js"></script>
+<script src="../js/admin-script.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    await loadSharedToast();
+    await initAdminNotificationsPage();
+  });
+</script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Makes the page responsive on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Create Account - Mujeeb KAU</title>
+
+  <!-- Google Font: Inter for modern, clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Main stylesheet for the system UI -->
+  <link rel="stylesheet" href="../css/public-style.css" />
+  <link rel="stylesheet" href="../css/shared-style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+
+      <!-- Logo and link back to homepage -->
+      <div class="topbar-brand" onclick="goPublic('landing')" title="Go Home">
+
+        <div class="logo-icon">
+          <!-- App logo -->
+          <img src="../sharing/logo.png" alt="Logo">
+        </div>
+
+        <div class="brand-text">
+          <!-- Application name -->
+          <h2>Mujeeb KAU</h2>
+
+          <!-- Short description -->
+          <p>Academic Assistant</p>
+        </div>
+
+      </div>
+
+      <!-- Login and Create Account buttons -->
+      <div class="topbar-actions">
+        <button class="top-link" onclick="goPublic('login')">Log In</button>
+        <button class="top-link primary" onclick="goPublic('signup')">Create Account</button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="public-main">
+    <div class="container">
+
+      <div class="card">
+
+        <!-- Create Account form title -->
+        <div class="card-header">Create Account</div>
+
+        <!-- First name -->
+        <div class="form-group">
+          <label for="signupFirstName">First Name</label>
+          <input type="text" id="signupFirstName" placeholder="e.g. Sarah" autocomplete="given-name" />
+        </div>
+
+        <!-- Last name -->
+        <div class="form-group">
+          <label for="signupLastName">Last Name</label>
+          <input type="text" id="signupLastName" placeholder="e.g. Al-Ahmadi" autocomplete="family-name" />
+        </div>
+
+
+        <!-- Email input -->
+        <div class="form-group">
+          <label for="signupEmail">Email Address</label>
+          <input
+            type="email"
+            id="signupEmail"
+            placeholder="example@stu.kau.edu.sa"
+            autocomplete="email"
+            spellcheck="false"
+          />
+          <!-- Domain hint -->
+          <p class="field-hint" id="signupEmailHint">
+            🎓 Only KAU emails are accepted &nbsp;·&nbsp;
+            <span class="hint-domain">@stu.kau.edu.sa</span> or
+            <span class="hint-domain">@kau.edu.sa</span>
+          </p>
+          <p class="field-error" id="signupEmailError"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+
+          <div class="password-wrap">
+            <input
+              type="password"
+              id="signupPassword"
+              placeholder="Min 8 chars, uppercase, lowercase, number"
+              autocomplete="new-password"
+            />
+            <button type="button" class="pass-toggle" onclick="togglePassword('signupPassword', this)">
+              👁
+            </button>
+          </div>
+          <p class="field-error" id="signupPasswordError"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="signupConfirmPassword">Confirm Password</label>
+
+          <div class="password-wrap">
+            <input
+              type="password"
+              id="signupConfirmPassword"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+            />
+            <button type="button" class="pass-toggle" onclick="togglePassword('signupConfirmPassword', this)">
+              👁
+            </button>
+          </div>
+          <p class="field-error" id="signupConfirmPasswordError"></p>
+        </div>
+
+
+
+        <!-- Gender selection -->
+        <div class="form-group">
+          <label>Gender</label>
+          <select id="signupGender">
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+
+
+        <!-- User type selection -->
+        <div class="form-group">
+          <label>User Type</label>
+          <select id="signupType">
+            <option value="">Select user type</option>
+            <option value="student">Student</option>
+            <option value="faculty">Faculty Member</option>
+          </select>
+        </div>
+
+
+        <!-- Department selection -->
+        <div class="form-group">
+          <label>College</label>
+          <select id="signupDepartment">
+            <option value="">Select college</option>
+
+            <option value="Medicine">Medicine</option>
+            <option value="Applied Medical Sciences">Applied Medical Sciences</option>
+            <option value="Dentistry">Dentistry</option>
+            <option value="Pharmacy">Pharmacy</option>
+            <option value="Nursing">Nursing</option>
+            <option value="Medical Rehabilitation Sciences">Medical Rehabilitation Sciences</option>
+            <option value="Applied Faculty">Applied Faculty</option>
+            <option value="Sciences">Sciences</option>
+            <option value="Marine Sciences">Marine Sciences</option>
+            <option value="Human Sciences and Design">Human Sciences and Design</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Environmental Sciences">Environmental Sciences</option>
+            <option value="Tourism">Tourism</option>
+            <option value="Architecture and Planning">Architecture and Planning</option>
+            <option value="Computing and Information Technology">Computing and Information Technology</option>
+            <option value="Economics and Administration">Economics and Administration</option>
+            <option value="Earth Sciences">Earth Sciences</option>
+            <option value="Maritime Studies">Maritime Studies</option>
+            <option value="Arts and Humanities">Arts and Humanities</option>
+            <option value="Law">Law</option>
+            <option value="Education">Education</option>
+            <option value="Communication and Media">Communication and Media</option>
+
+          </select>
+        </div>
+
+<button id="signupBtn" class="btn btn-success" onclick="handleSignup()">Create Account</button>
+
+        <!-- Link to login -->
+        <div class="text-center mt-20">
+          <span class="link" onclick="goPublic('login')">Already have an account? Log In</span>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Shared script (Toast + Sidebar functions) -->
+  <script src="../js/shared-script.js"></script>
+
+  <!-- Main script handling signup, login, etc. -->
+  <script src="../js/public-script.js"></script>
+
+  <script>
+    // ── Initialize toast + wire up UX enhancements ────────────────────────────
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadSharedToast();
+      _initSignupFormUX();
+    });
+
+    const _KAU_PATTERN = /^[a-zA-Z0-9._%+\-]+@(stu\.kau\.edu\.sa|kau\.edu\.sa)$/;
+    const _STRONG_PASS  = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    function _setInputState(inputEl, errorEl, isError, message) {
+      if (isError) {
+        inputEl.classList.add("input-error");
+        inputEl.classList.remove("input-valid");
+        if (errorEl) { errorEl.textContent = message; errorEl.style.display = "block"; }
+      } else {
+        inputEl.classList.remove("input-error");
+        inputEl.classList.add("input-valid");
+        if (errorEl) { errorEl.textContent = ""; errorEl.style.display = "none"; }
+      }
+    }
+
+    function _clearInputState(inputEl, errorEl) {
+      inputEl.classList.remove("input-error", "input-valid");
+      if (errorEl) { errorEl.textContent = ""; errorEl.style.display = "none"; }
+    }
+
+    function _initSignupFormUX() {
+      const emailInput   = document.getElementById("signupEmail");
+      const emailError   = document.getElementById("signupEmailError");
+      const passInput    = document.getElementById("signupPassword");
+      const passError    = document.getElementById("signupPasswordError");
+      const confInput    = document.getElementById("signupConfirmPassword");
+      const confError    = document.getElementById("signupConfirmPasswordError");
+
+      // ── Domain auto-suggest ────────────────────────────────────────────────
+      if (emailInput) {
+        emailInput.addEventListener("input", () => {
+          const val = emailInput.value;
+          if (val && !val.includes("@")) {
+            const suggested = val + "@stu.kau.edu.sa";
+            const hint = document.getElementById("signupEmailHint");
+            if (hint) {
+              hint.innerHTML =
+                `💡 Did you mean <button type="button" class="suggest-btn" onclick="
+                  document.getElementById('signupEmail').value='${suggested}';
+                  this.parentElement.innerHTML='🎓 Only KAU emails are accepted &nbsp;·&nbsp;<span class=\'hint-domain\'>@stu.kau.edu.sa</span> or <span class=\'hint-domain\'>@kau.edu.sa</span>';
+                  document.getElementById('signupEmail').dispatchEvent(new Event('blur'));
+                ">${suggested}</button>?`;
+            }
+            _clearInputState(emailInput, emailError);
+            return;
+          }
+          const hint = document.getElementById("signupEmailHint");
+          if (hint) {
+            hint.innerHTML =
+              '🎓 Only KAU emails are accepted &nbsp;·&nbsp;<span class="hint-domain">@stu.kau.edu.sa</span> or <span class="hint-domain">@kau.edu.sa</span>';
+          }
+          if (!val) _clearInputState(emailInput, emailError);
+        });
+
+        emailInput.addEventListener("blur", () => {
+          const val = emailInput.value.trim();
+          if (!val) { _clearInputState(emailInput, emailError); return; }
+          if (!_KAU_PATTERN.test(val)) {
+            _setInputState(emailInput, emailError, true,
+              "⚠ Must be a KAU email ending in @stu.kau.edu.sa or @kau.edu.sa");
+          } else {
+            _setInputState(emailInput, emailError, false, "");
+          }
+        });
+
+        emailInput.addEventListener("focus", () => _clearInputState(emailInput, emailError));
+      }
+
+      // ── Password strength indicator ────────────────────────────────────────
+      if (passInput) {
+        passInput.addEventListener("blur", () => {
+          const val = passInput.value;
+          if (!val) { _clearInputState(passInput, passError); return; }
+          if (!_STRONG_PASS.test(val)) {
+            _setInputState(passInput, passError, true,
+              "⚠ Min 8 characters with uppercase, lowercase, and a number");
+          } else {
+            _setInputState(passInput, passError, false, "");
+          }
+        });
+        passInput.addEventListener("focus", () => _clearInputState(passInput, passError));
+      }
+
+      // ── Confirm password match check ───────────────────────────────────────
+      if (confInput) {
+        confInput.addEventListener("blur", () => {
+          const val  = confInput.value;
+          const pass = passInput ? passInput.value : "";
+          if (!val) { _clearInputState(confInput, confError); return; }
+          if (val !== pass) {
+            _setInputState(confInput, confError, true, "⚠ Passwords do not match");
+          } else {
+            _setInputState(confInput, confError, false, "");
+          }
+        });
+        confInput.addEventListener("focus", () => _clearInputState(confInput, confError));
+      }
+    }
+  </script>
+
+</body>
+
+</html>

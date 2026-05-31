@@ -1,0 +1,573 @@
+/* =========================================================
+   SHARED STYLE - AUTH AREA (Sidebar + Toast + Confirm)
+   Structure:
+   1) Utilities
+   2) Auth Shell
+   3) Sidebar
+   4) Chat History
+   5) Toast
+   6) Confirm Dialog
+   7) Locked Shared Overrides
+========================================================= */
+
+
+/* ========================================
+   UTILITIES
+======================================== */
+
+.hidden {
+  display: none !important;
+}
+
+
+/* ========================================
+   AUTH SHELL (Dashboard Layout)
+======================================== */
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.auth-topbar {
+  background: white;
+  box-shadow: 0 10px 10px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.auth-topbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.auth-topbar-brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  user-select:none;
+}
+
+.menu-btn {
+  background: #ffffff;
+  border: 1px solid #dfe7df;
+  color: #111;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.menu-btn:hover{
+  background: #f7f7f7;
+}
+
+
+/* ========================================
+   SIDEBAR OVERLAY
+======================================== */
+
+.sidebar-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 999;
+}
+
+.sidebar-overlay.hidden{
+  display:none !important;
+}
+
+
+/* ========================================
+   SIDEBAR PANEL
+======================================== */
+
+.mk-sidebar {
+  width: 320px;
+  max-width: 85vw;
+  background: white;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  border-right: 1px solid #e8f5e9;
+  padding: 18px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+  transform: translateX(-110%);
+  transition: 0.25s ease;
+}
+
+#authArea.sidebar-open .mk-sidebar{
+  transform: translateX(0);
+}
+
+
+/* Sidebar Header */
+
+.sidebar-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.sidebar-brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  user-select: none;
+}
+
+.sidebar-close{
+  background: transparent;
+  border: none;
+  color: #111;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+.sidebar-close:hover{
+  background:#f2f2f2;
+}
+
+
+/* Sidebar Navigation */
+
+.sidebar-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #66bb6a;
+  text-transform: uppercase;
+  margin: 12px 0 10px;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: #e8f5e9;
+  margin: 18px 0;
+}
+
+.side-link {
+  width: 100%;
+  text-align: left;
+  padding: 12px 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e7eee7;
+  background: white;
+  color: #2e7d32;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.side-link:hover {
+  background: #f3f7f3;
+}
+
+.side-link.danger {
+  border-color: #ffcdd2;
+  color: #c62828;
+}
+
+.side-link.danger:hover {
+  background: #ffebee;
+}
+
+
+/* ========================================
+   CHAT HISTORY (Inside Sidebar)
+======================================== */
+
+.chat-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sub-item {
+  padding-left: 25px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.sub-item:hover {
+  opacity: 1;
+}
+
+/* Conversation history items use normal weight (not bold) */
+#chatHistory .conversation-item {
+  font-weight: 400 !important;
+}
+
+.conversation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.delete-convo {
+  margin-right: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0;
+  transition: 0.2s ease;
+}
+
+.conversation-item:hover .delete-convo {
+  opacity: 1;
+}
+
+.delete-convo:hover {
+  color: #d32f2f;
+}
+
+.delete-convo {
+  margin-left: auto;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.delete-convo:hover {
+  opacity: 1;
+  color: red;
+}
+
+
+
+/* ========================================
+   LOGO SIZES
+======================================== */
+
+.logo-icon {
+  width: 60px;
+  height: 60px;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+
+/* ========================================
+   SHARED TOAST (Bottom Right)
+======================================== */
+
+.mk-toast-host{
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+  width: min(520px, calc(100vw - 24px));
+}
+
+.mk-toast{
+  pointer-events: auto;
+  background: white;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 2px solid #e8f5e9;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: 0.22s ease;
+}
+
+.mk-toast.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mk-toast .mk-icon{
+  font-size: 18px;
+  margin-top: 1px;
+}
+
+.mk-toast .mk-body{
+  flex: 1;
+}
+
+.mk-toast .mk-title{
+  font-weight: 900;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.mk-toast .mk-msg{
+  font-weight: 700;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+.mk-toast .mk-close{
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.mk-toast .mk-close:hover{
+  background:#f2f2f2;
+}
+
+/* Toast Types */
+
+.mk-toast.success{ border-color: #c8e6c9; }
+.mk-toast.success .mk-title,
+.mk-toast.success .mk-msg{ color: #2e7d32; }
+
+.mk-toast.error{ border-color: #ffcdd2; }
+.mk-toast.error .mk-title,
+.mk-toast.error .mk-msg{ color: #c62828; }
+
+.mk-toast.info{ border-color: #bbdefb; }
+.mk-toast.info .mk-title,
+.mk-toast.info .mk-msg{ color: #1565c0; }
+
+.mk-toast.warning{ border-color: #ffe0b2; }
+.mk-toast.warning .mk-title,
+.mk-toast.warning .mk-msg{ color: #ef6c00; }
+
+
+/* ========================================
+   SHARED CONFIRM DIALOG
+======================================== */
+
+.mk-confirm-host {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+}
+
+.mk-confirm-host.hidden {
+  display: none !important;
+}
+
+.mk-confirm-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+}
+
+.mk-confirm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(350px, calc(100vw - 40px));
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+  overflow: hidden;
+}
+
+.mk-confirm-head {
+  padding: 16px 18px;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mk-confirm-title {
+  font-weight: 800;
+  font-size: 17px;
+  color: #1b5e20;
+}
+
+.mk-confirm-x {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.mk-confirm-x:hover {
+  background: #f1f1f1;
+}
+
+.mk-confirm-body {
+  padding: 18px 20px 10px;
+}
+
+.mk-confirm-msg {
+  color: #2e7d32;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.mk-confirm-actions {
+  padding: 16px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.mk-confirm-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.mk-confirm-btn.mk-cancel {
+  border: 2px solid #2e7d32;
+  background: #fff;
+  color: #2e7d32;
+}
+
+.mk-confirm-btn.mk-delete{
+  border: none;
+  background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
+  color: white;
+}
+
+.mk-confirm-btn.mk-delete:hover{
+  filter: brightness(0.95);
+}
+
+
+/* ========================================
+   LOCK SHARED SIDEBAR STYLES
+======================================== */
+
+#mkSharedShell .mk-sidebar{
+  width: 320px !important;
+  max-width: 85vw !important;
+  background: white !important;
+  border-right: 1px solid #e8f5e9 !important;
+  padding: 18px !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  height: 100vh !important;
+  z-index: 1000 !important;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18) !important;
+  transform: translateX(-110%);
+  transition: 0.25s ease;
+}
+
+#authArea.sidebar-open #mkSharedShell .mk-sidebar{
+  transform: translateX(0);
+}
+
+#mkSharedShell .logo-icon{
+  width: 60px !important;
+  height: 60px !important;
+  background: none !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+#mkSharedShell .logo-icon img{
+  width: 60px !important;
+  height: 60px !important;
+  object-fit: contain !important;
+}
+
+#mkSharedShell .brand-text h2{
+  font-size: 20px !important;
+  line-height: 1.2 !important;
+}
+
+#mkSharedShell .brand-text p{
+  font-size: 12px !important;
+  margin-top: 2px !important;
+}
+
+
+/* ========================================
+   CONVERSATION HISTORY — SIDEBAR
+======================================== */
+
+/* Active conversation: green left accent + light tint */
+.conversation-item.convo-active {
+  background: #e8f5e9 !important;
+  border-color: #2e7d32 !important;
+  border-left: 3px solid #2e7d32;
+  font-weight: 700 !important;
+}
+
+/* Label text — truncate overflowing timestamps */
+.convo-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+/* Delete icon — hidden by default, appears on hover */
+.conversation-item .delete-convo {
+  margin-left: auto;
+  flex-shrink: 0;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.18s ease, color 0.18s ease;
+}
+
+.conversation-item:hover .delete-convo {
+  opacity: 1;
+}
+
+.conversation-item .delete-convo:hover {
+  color: #d32f2f;
+  opacity: 1;
+}
+
+/* Empty-state placeholder when no conversations exist */
+.convo-empty {
+  font-size: 12px;
+  color: #a5c8a4;
+  padding: 6px 10px;
+  font-style: italic;
+}
+
+/* ── New Chat action button — visually distinct from conversation list items ── */
+.new-chat-btn {
+  background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%) !important;
+  color: #fff !important;
+  border-color: #2e7d32 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em;
+  margin-bottom: 8px;
+}
+
+.new-chat-btn:hover {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%) !important;
+  color: #fff !important;
+}
